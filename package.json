@@ -1,0 +1,22 @@
+{
+  "name": "ads-loader",
+  "version": "0.1.0",
+  "description": "Isomorphic VAST ADS LOADER",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sedaAds/ads-loader.git"
+  },
+  "authors": [
+    "Luis Fetzner <fetzpt@gmail.com> (https://github.com/fetz)",
+    "Carlos Serrano <carpasse@gmail.com> (https://github.com/carpasse)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sedaAds/ads-loader/issues"
+  },
+  "homepage": "https://github.com/sedaAds/ads-loader#readme"
+}
