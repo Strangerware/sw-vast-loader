@@ -4,7 +4,9 @@
   "description": "Isomorphic VAST ADS LOADER",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha --compilers js:babel-register --reporter spec './test/**/*.js'",
+    "tdd": "./node_modules/.bin/mocha --compilers js:babel-register --watch --reporter spec './test/**/*.js'",
+    "build": "./node_modules/.bin/gulp build --env production"
   },
   "repository": {
     "type": "git",
@@ -20,7 +22,8 @@
   },
   "homepage": "https://github.com/sedaAds/ads-loader#readme",
   "devDependencies": {
-    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-register": "^6.16.0",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
     "browserify-istanbul": "^2.0.0",
