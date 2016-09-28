@@ -1,11 +1,18 @@
 "use strict";
 
 import { assert } from 'chai';
-import adsLoader from '../src/adsLoader';
+import AdsLoader from '../src/AdsLoader';
 
-describe('adsLoader', () => {
-  it('must exist', () => {
-    assert.isObject(adsLoader);
+describe('AdsLoader', () => {
+  it('must be a class', () => {
+    assert.instanceOf(new AdsLoader(), AdsLoader);
   });
+
+  describe('requestAd', ()=> {
+    it('must return a promise', ()=>  {
+      const adsLoader = new AdsLoader();
+      assert.instanceOf(adsLoader.requestAd(), Promise);
+    });
+  })
 });
     

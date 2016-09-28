@@ -1,2 +1,12 @@
+"use strict";
 
-export default {};
+class AdsLoader {
+  constructor () {
+  }
+
+  requestAd() {
+    return Promise.resolve();
+  }
+}
+
+export default AdsLoader;
