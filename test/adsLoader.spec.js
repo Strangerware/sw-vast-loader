@@ -4,8 +4,8 @@ import { assert } from 'chai';
 import adsLoader from '../src/adsLoader';
 
 describe('adsLoader', () => {
-    it('must exist', () => {
-        assert.isObject(adsLoader);
-    });
+  it('must exist', () => {
+    assert.isObject(adsLoader);
+  });
 });
-
+    
