@@ -5,5 +5,4 @@
 - to support VAST 2.x, 3.x, 4.x
 
 ## License
-
 ads-loader is licensed under the MIT License, Version 2.0. [View the license file](LICENSE)
