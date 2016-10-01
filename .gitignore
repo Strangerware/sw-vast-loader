@@ -1,6 +1,7 @@
 node_modules
+dist
 *.log
 .*
 !.gitignore
-!.eslintrc.json
-!.babelrc
+!.eslintrc
+!.nvmrc
