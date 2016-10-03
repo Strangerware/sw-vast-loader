@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "ava",
+    "tdd": "ava --watch",
     "watch": "./node_modules/.bin/webpack --progress --watch",
     "lint": "eslint .",
     "lintfix": "eslint . --fix"
