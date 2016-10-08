@@ -7,8 +7,8 @@
     "test": "ava",
     "tdd": "ava --watch",
     "watch": "./node_modules/.bin/webpack --progress --watch",
-    "lint": "eslint .",
-    "lintfix": "eslint . --fix"
+    "lint": "eslint src/ test/",
+    "lintfix": "eslint src/ test/ --fix"
   },
   "repository": {
     "type": "git",
@@ -34,6 +34,7 @@
     "babel-register": "^6.16.0",
     "eslint": "^3.7.1",
     "eslint-config-airbnb-base": "^8.0.0",
+    "eslint-plugin-ava": "^3.1.0",
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",

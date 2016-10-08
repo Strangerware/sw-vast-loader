@@ -1,13 +1,12 @@
-import fetchAd from './fetchAd';
+// import fetchAd from './fetchAd';
 
-const defaults = {};
 
 export default (config = {}, masterAdTag) => {
-  config = {...defaults, ...config};
   if (!masterAdTag) {
     return Promise.reject(new Error('adsLoader missing masterAdTag'));
   }
 
+  return Promise.resolve();
 
   // fetchAd = _.curry(fetchAd)(config.fetch)
   // wrapperChain = _.curry(wrapperChain)(fetchAd)

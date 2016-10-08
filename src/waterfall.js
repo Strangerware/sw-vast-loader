@@ -1,12 +1,12 @@
 const identity = ad => ad;
 
-const doWaterfall = (currentChain, nextChain) => 
+const doWaterfall = (currentChain, nextChain) =>
   currentChain
-    .catch(prevErrors => 
+    .catch(prevErrors =>
       nextChain()
         .catch(nextErrors =>
           Promise.reject([...prevErrors, ...nextErrors])
-        ) 
+        )
     );
 
 const error2Array = e => Promise.reject([e]);
@@ -16,7 +16,7 @@ export default (wrapperChain, { validate = identity }, ads = []) => {
     wrapperChain(ad)
       .then(validate)
       .catch(error2Array);
-  
+
   return ads
     .map(createChain)
     .reduce(doWaterfall, Promise.reject([]));

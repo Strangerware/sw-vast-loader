@@ -1,10 +1,10 @@
-"use strict";
+
 
 const config = {
   entry: './src/AdsLoader.js',
   output: {
-    path: __dirname + "/dist/",
-    filename: 'adsLoader.js'
+    path: `${__dirname}/dist/`,
+    filename: 'adsLoader.js',
   },
   module: {
     loaders: [
@@ -13,10 +13,10 @@ const config = {
         include: __dirname,
         exclude: /node_modules/,
         query: {
-          presets: ['es2017']
-        }
-      }
-    ]
+          presets: ['es2017'],
+        },
+      },
+    ],
   },
 };
 
