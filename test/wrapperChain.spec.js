@@ -21,21 +21,22 @@ const nonVastWrapperObj = () => ({
 });
 
 test('must return a promise', t =>
-  t.true(vastWrapperChain(() =>
-    Promise.resolve(), { adTag: 'http://example.com/' }) instanceof Promise));
+  t.true(
+    vastWrapperChain(
+      () => Promise.resolve(), {}, 'http://example.com/'
+    ) instanceof Promise
+  )
+);
 
-test('must fetch fetch the ad', (t) => {
+test('must fetch the ad', async (t) => {
   const fetchAd = sinon.stub().returns(Promise.resolve());
-  const config = { adTag: 'http://example.com/' };
-  vastWrapperChain(fetchAd, config)
-  .then(() => {
-    t.true(fetchAd.calledOnce);
-    t.true(fetchAd.calledWith(config.adTag, sinon.match(config)));
-  });
+  const videoAdTag = 'http://example.com/';
+  await vastWrapperChain(fetchAd, {}, videoAdTag);
+  t.true(fetchAd.calledOnce);
+  t.true(fetchAd.calledWith(videoAdTag));
 });
 
 test('must recursively fetch ads until it gets a non wrapper ad', async (t) => {
-  const config = { adTag: 'http://example.com/' };
   const fetchAd = sinon.stub();
 
   fetchAd
@@ -46,7 +47,7 @@ test('must recursively fetch ads until it gets a non wrapper ad', async (t) => {
     .onThirdCall()
       .returns(Promise.resolve(nonVastWrapperObj()));
 
-  await vastWrapperChain(fetchAd, config);
+  await vastWrapperChain(fetchAd, {}, 'http://example.com/');
   t.true(fetchAd.calledThrice);
   t.true(fetchAd.firstCall.calledWith('http://example.com/'));
   t.true(fetchAd.secondCall.calledWith('http://example.com/1'));
@@ -54,15 +55,17 @@ test('must recursively fetch ads until it gets a non wrapper ad', async (t) => {
 });
 
 test('must reject the promise if there is a problem fetching the ad', (t) => {
-  const config = { adTag: 'http://example.com/' };
   const fetchAd = sinon.stub();
 
   fetchAd.returns(Promise.reject(new Error('Problem fetching the ad')));
-  t.throws(vastWrapperChain(fetchAd, config), 'Problem fetching the ad');
+  t.throws(
+    vastWrapperChain(
+      fetchAd, {}, 'http://example.com/'
+    ), 'Problem fetching the ad');
 });
 
 test('must reject the promise if "maxChainDepth" is reached', (t) => {
-  const config = { adTag: 'http://example.com/', maxChainDepth: 4 };
+  const config = { maxChainDepth: 4 };
   const fetchAd = sinon.stub();
 
   fetchAd.returns(Promise.resolve(vastWrapperObj('http://example.com/2')));
@@ -76,7 +79,6 @@ test('must reject the promise if "maxChainDepth" is reached', (t) => {
 });
 
 test('must resolve with an array of all the chained wrappers and the ad', async (t) => {
-  const config = { adTag: 'http://example.com/' };
   const fetchAd = sinon.stub();
 
   fetchAd
@@ -87,7 +89,7 @@ test('must resolve with an array of all the chained wrappers and the ad', async 
     .onThirdCall()
       .returns(Promise.resolve(nonVastWrapperObj()));
 
-  const adChain = await vastWrapperChain(fetchAd, config);
+  const adChain = await vastWrapperChain(fetchAd, {}, 'http://example.com/');
   const expectedAdChain = [
     vastWrapperObj('http://example.com/1'),
     vastWrapperObj('http://example.com/2'),

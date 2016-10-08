@@ -16,20 +16,19 @@ function validateChainDepth(adChain, maxChainDepth) {
   return Promise.resolve();
 }
 
-function wrapperChain(fetchAd, config, adChain = []) {
+function wrapperChain(fetchAd, config, videoAdTag, adChain = []) {
   return validateChainDepth(adChain, config.maxChainDepth)
-    .then(() => fetchAd(config.adTag, config))
+    .then(() => fetchAd(videoAdTag))
     .then((vastAdObj) => {
       const newAdChain = [...adChain, vastAdObj];
 
       if (isVastWrapper(vastAdObj)) {
-        const adTag = getVastTagUri(vastAdObj);
-        return wrapperChain(fetchAd, { ...config, adTag }, newAdChain);
+        return wrapperChain(fetchAd, config, getVastTagUri(vastAdObj), newAdChain);
       }
 
       return Promise.resolve(newAdChain);
     });
 }
 
-export default (fetchAd, config = {}) =>
-  wrapperChain(fetchAd, { ...defaults, ...config });
+export default (fetchAd, config = {}, videoAdTag) =>
+  wrapperChain(fetchAd, { ...defaults, ...config }, videoAdTag);

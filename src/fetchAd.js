@@ -13,9 +13,9 @@ const promisify = func => new Promise(
   }
 );
 
-export default function (config = {}, masterAdTag) {
+export default function (config = {}, videoAdTag) {
   const parseStrDefaults = { explicitArray: false, normalizeTags: true, normalize: true };
-  return fetch(masterAdTag, config)
+  return fetch(videoAdTag, config)
     .then(res =>
       promisify(cb =>
         parseString(res.text(), parseStrDefaults, cb)

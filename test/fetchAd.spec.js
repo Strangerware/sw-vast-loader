@@ -24,11 +24,11 @@ test.afterEach(() => root.fetch.restore());
 
 test.serial('must return a promise', t => t.true(fetchAd() instanceof Promise));
 
-test.serial('must fetch the ad using the masterAdTag endpoint', (t) => {
-  const masterAdTag = 'http://example.com/';
-  fetchAd({}, masterAdTag);
+test.serial('must fetch the ad using the videoAdTag endpoint', (t) => {
+  const videoAdTag = 'http://example.com/';
+  fetchAd({}, videoAdTag);
   t.true(root.fetch.calledOnce);
-  t.true(root.fetch.calledWith(masterAdTag, sinon.match.object));
+  t.true(root.fetch.calledWith(videoAdTag, sinon.match.object));
 });
 
 test.serial('must use the config to customise the fetch', (t) => {
