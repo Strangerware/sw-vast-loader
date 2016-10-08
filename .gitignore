@@ -5,3 +5,4 @@ dist
 !.gitignore
 !.eslintrc
 !.nvmrc
+!.travis.yml
