@@ -1,6 +1,6 @@
 import test from 'ava';
 import sinon from 'sinon';
-import vastWrapperChain from '../src/vastWrapperChain';
+import vastWrapperChain from '../src/wrapperChain';
 
 const vastWrapperObj = (vasttaguri = 'http://example.com/') => ({
   vast: {

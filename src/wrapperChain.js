@@ -16,7 +16,7 @@ function validateChainDepth(adChain, maxChainDepth) {
   return Promise.resolve();
 }
 
-function vastWrapperChain(fetchAd, config, adChain = []) {
+function wrapperChain(fetchAd, config, adChain = []) {
   return validateChainDepth(adChain, config.maxChainDepth)
     .then(() => fetchAd(config.adTag, config))
     .then((vastAdObj) => {
@@ -24,7 +24,7 @@ function vastWrapperChain(fetchAd, config, adChain = []) {
 
       if (isVastWrapper(vastAdObj)) {
         const adTag = getVastTagUri(vastAdObj);
-        return vastWrapperChain(fetchAd, { ...config, adTag }, newAdChain);
+        return wrapperChain(fetchAd, { ...config, adTag }, newAdChain);
       }
 
       return Promise.resolve(newAdChain);
@@ -32,4 +32,4 @@ function vastWrapperChain(fetchAd, config, adChain = []) {
 }
 
 export default (fetchAd, config = {}) =>
-  vastWrapperChain(fetchAd, { ...defaults, ...config });
+  wrapperChain(fetchAd, { ...defaults, ...config });
