@@ -1,3 +1,6 @@
 language: node_js
 install:
 - npm install
+- npm install bithound
+- bithound check git@github.com:sedaAds/ads-loader.git
+

@@ -6,3 +6,5 @@ dist
 !.eslintrc
 !.nvmrc
 !.travis.yml
+!.bithoundrc
+
