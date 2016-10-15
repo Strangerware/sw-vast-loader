@@ -1,20 +1,30 @@
-// import fetchAd from './fetchAd';
+import fetchAd from './fetchAd';
+import wrapperChain from './wrapperChain';
+import waterfall from './waterfall';
+import {
+  hasVastAd,
+  normaliseWaterfall,
+ } from './selectors';
 
-
-export default (config = {}, masterAdTag) => {
-  if (!masterAdTag) {
-    return Promise.reject(new Error('adsLoader missing masterAdTag'));
+const validate = (vastObj) => {
+  if (!hasVastAd(vastObj)) {
+    const adsLoaderErr = new Error('adsLoader missing ad on VAST response');
+    adsLoaderErr.data = vastObj;
+    throw adsLoaderErr;
   }
 
-  return Promise.resolve();
+  return vastObj;
+};
 
-  // fetchAd = _.curry(fetchAd)(config.fetch)
-  // wrapperChain = _.curry(wrapperChain)(fetchAd)
-  // waterfall = _.curry(waterfall)(wrapperChain, config)
+export default (config = {}, videoAdTag) => {
+  if (!videoAdTag) {
+    return Promise.reject(new Error('adsLoader missing videoAdTag'));
+  }
 
-  // fetchAd(masterAdTag)
-  //   .then(wrapperChain)
-  //   .then(waterfall)
-  //   .then(()=>{})
-  //   .catch(()=>{})
+  const requestAd = fetchAd(config.fetch);
+
+  return requestAd(videoAdTag)
+    .then(validate)
+    .then(normaliseWaterfall)
+    .then(waterfall(wrapperChain(requestAd, config), config));
 };
