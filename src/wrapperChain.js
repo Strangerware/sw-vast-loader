@@ -1,4 +1,8 @@
-import { isVastWrapper, getVastTagUri } from './selectors';
+import curry from 'lodash.curry';
+import {
+  isVastWrapper,
+  getVastTagUri,
+ } from './selectors';
 
 const defaults = { maxChainDepth: 5 };
 
@@ -9,7 +13,7 @@ function vastWrapperChainError(adChain) {
 }
 
 function validateChainDepth(adChain, maxChainDepth) {
-  if (adChain.length >= maxChainDepth) {
+  if (adChain.length > maxChainDepth) {
     return Promise.reject(vastWrapperChainError(adChain));
   }
 
@@ -30,5 +34,10 @@ function wrapperChain(fetchAd, config, videoAdTag, adChain = []) {
     });
 }
 
-export default (fetchAd, config = {}, videoAdTag) =>
-  wrapperChain(fetchAd, { ...defaults, ...config }, videoAdTag);
+export default curry((fetchAd, config = {}, vastAdObj) => {
+  if (!isVastWrapper(vastAdObj)) {
+    return Promise.resolve([vastAdObj]);
+  }
+
+  return wrapperChain(fetchAd, { ...defaults, ...config }, getVastTagUri(vastAdObj), [vastAdObj]);
+}, 3);
