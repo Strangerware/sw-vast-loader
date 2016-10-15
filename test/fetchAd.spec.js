@@ -22,7 +22,7 @@ test.beforeEach(() => sinon.stub(root, 'fetch').returns(
 );
 test.afterEach(() => root.fetch.restore());
 
-test.serial('must return a promise', t => t.true(fetchAd() instanceof Promise));
+test.serial('must return a promise', t => t.true(fetchAd({}, '') instanceof Promise));
 
 test.serial('must fetch the ad using the videoAdTag endpoint', (t) => {
   const videoAdTag = 'http://example.com/';

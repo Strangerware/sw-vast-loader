@@ -1,24 +1,8 @@
 import 'isomorphic-fetch';
-import { parseString } from 'xml2js';
+import curry from 'lodash.curry';
+import vastxml2js from './vastxml2js';
 
-const promisify = func => new Promise(
-  (resolve, reject) => {
-    func((error, result) => {
-      if (error) {
-        return reject(error);
-      }
+const fetchAd = (config = {}, videoAdTag) => fetch(videoAdTag, config)
+    .then(res => vastxml2js(res.text()));
 
-      return resolve(result);
-    });
-  }
-);
-
-export default function (config = {}, videoAdTag) {
-  const parseStrDefaults = { explicitArray: false, normalizeTags: true, normalize: true };
-  return fetch(videoAdTag, config)
-    .then(res =>
-      promisify(cb =>
-        parseString(res.text(), parseStrDefaults, cb)
-      )
-    );
-}
+export default curry(fetchAd, 2);
