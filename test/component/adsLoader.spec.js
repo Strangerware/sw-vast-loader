@@ -1,10 +1,10 @@
 import test from 'ava';
 import root from 'window-or-global';
 import sinon from 'sinon';
-import adsLoader from '../src/adsLoader';
-import vastxml2js from '../src/vastxml2js';
-import { normaliseWaterfall } from '../src/selectors';
-import { createAsXml } from './fixtures/vastFactory';
+import adsLoader from '../../src/adsLoader';
+import vastxml2js from '../../src/vastxml2js';
+import { normaliseWaterfall } from '../../src/selectors';
+import { createAsXml } from '../fixtures/vastFactory';
 
 test.beforeEach(() => sinon.stub(root, 'fetch'));
 test.afterEach(() => root.fetch.restore());

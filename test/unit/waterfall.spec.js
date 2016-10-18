@@ -1,6 +1,6 @@
 import test from 'ava';
 import sinon from 'sinon';
-import waterfall from '../src/waterfall';
+import waterfall from '../../src/waterfall';
 
 const getNewAd = () => ({ wrapper: {} });
 

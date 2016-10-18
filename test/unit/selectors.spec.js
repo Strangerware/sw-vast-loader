@@ -5,8 +5,8 @@ import {
   hasAd,
   getAd,
   normaliseWaterfall,
-} from '../src/selectors';
-import { createAsJs } from './fixtures/vastFactory';
+} from '../../src/selectors';
+import { createAsJs } from '../fixtures/vastFactory';
 
 const vastWrapperObj = {
   vast: {

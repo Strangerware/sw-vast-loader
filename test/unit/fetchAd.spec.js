@@ -1,7 +1,7 @@
 import test from 'ava';
 import sinon from 'sinon';
 import root from 'window-or-global';
-import fetchAd from '../src/fetchAd';
+import fetchAd from '../../src/fetchAd';
 
 const xmlExample = () => `
 <?xml version="1.0"?>

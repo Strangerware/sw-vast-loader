@@ -1,6 +1,6 @@
 import test from 'ava';
-import vastxml2js from '../src/vastxml2js';
-import { vast, parsedVast } from './fixtures/vastFullSample';
+import vastxml2js from '../../src/vastxml2js';
+import { vast, parsedVast } from '../fixtures/vastFullSample';
 
 const xmlSample = `
  <?xml version="1.0" encoding="UTF-8"?>

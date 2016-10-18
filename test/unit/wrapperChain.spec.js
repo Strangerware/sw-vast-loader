@@ -1,7 +1,7 @@
 import test from 'ava';
 import sinon from 'sinon';
-import vastWrapperChain from '../src/wrapperChain';
-import { createAsJs } from './fixtures/vastFactory';
+import vastWrapperChain from '../../src/wrapperChain';
+import { createAsJs } from '../fixtures/vastFactory';
 
 const vastWrapperObj = (uri = 'http://example.com/') => createAsJs([{
   uri,
