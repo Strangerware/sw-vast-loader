@@ -8,9 +8,10 @@ test('must return a promise', t =>
   t.true(waterfall(() => Promise.resolve(), {}, [{}]) instanceof Promise)
 );
 
-test('must fail if is passed an empty waterfall', t =>
-  t.throws(waterfall(() => Promise.resolve(), {}, []), sinon.match([]).test)
-);
+test('must fail if is passed an empty waterfall', (t) => {
+  t.throws(waterfall(() => Promise.resolve(), {}, undefined), sinon.match([]).test);
+  t.throws(waterfall(() => Promise.resolve(), {}, []), sinon.match([]).test);
+});
 
 test('must allow custom ad chain validation', async (t) => {
   const ad1 = getNewAd();

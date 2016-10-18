@@ -20,7 +20,7 @@ function validateChainDepth(adChain, maxChainDepth) {
   return Promise.resolve();
 }
 
-function wrapperChain(fetchAd, config, videoAdTag, adChain = []) {
+function wrapperChain(fetchAd, config, videoAdTag, adChain) {
   return validateChainDepth(adChain, config.maxChainDepth)
     .then(() => fetchAd(videoAdTag))
     .then((vastAdObj) => {

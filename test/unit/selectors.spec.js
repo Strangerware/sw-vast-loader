@@ -63,6 +63,7 @@ test('hasAd must return true if there is at least an ad on the vastObj and false
   t.true(hasAd({ vast: { ad: {} } }));
   t.true(hasAd({ vast: { ad: [] } }));
   t.false(hasAd({ vast: { ad: undefined } }));
+  t.false(hasAd());
   t.false(hasAd({}));
   t.false(hasAd(null));
 });
@@ -84,6 +85,7 @@ test('normalise waterfall must return an array with the normalised waterfall', a
       return vastObj;
     });
 
+  t.deepEqual(normaliseWaterfall(), [{}]);
   t.deepEqual(normaliseWaterfall(noAdsWaterfall), [noAdsWaterfall]);
   t.deepEqual(normaliseWaterfall(oneAdWaterfall), [oneAdWaterfall]);
   t.deepEqual(normaliseWaterfall(adsWaterfall), expected);

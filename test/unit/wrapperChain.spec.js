@@ -10,13 +10,19 @@ const vastWrapperObj = (uri = 'http://example.com/') => createAsJs([{
 
 const nonVastWrapperObj = () => createAsJs([{ type: 'ad' }]);
 
-test('must return a promise', t =>
+test('must return a promise', (t) => {
   t.true(
     vastWrapperChain(
       () => Promise.resolve(), {}, 'http://example.com/'
     ) instanceof Promise
-  )
-);
+  );
+
+  t.true(
+    vastWrapperChain(
+      () => Promise.resolve(), undefined, 'http://example.com/'
+    ) instanceof Promise
+  );
+});
 
 test('must fetch the ad', async (t) => {
   const fetchAd = sinon.stub().returns(Promise.resolve());
