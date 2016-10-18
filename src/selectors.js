@@ -1,15 +1,15 @@
 import get from 'lodash.get';
 
-export const isVastWrapper = (vastObj = {}) => !!get(vastObj, 'vast.ad.wrapper');
+export const isWrapper = (vastObj = {}) => !!get(vastObj, 'vast.ad.wrapper');
 
-export const getVastTagUri = (vastObj = {}) => get(vastObj, 'vast.ad.wrapper.vastadtaguri');
+export const getTagUri = (vastObj = {}) => get(vastObj, 'vast.ad.wrapper.vastadtaguri');
 
-export const getVastAd = (vastObj = {}) => get(vastObj, 'vast.ad');
+export const getAd = (vastObj = {}) => get(vastObj, 'vast.ad');
 
-export const hasVastAd = (vastObj = {}) => !!getVastAd(vastObj);
+export const hasAd = (vastObj = {}) => !!getAd(vastObj);
 
 export const normaliseWaterfall = (vastObj = {}) => {
-  const ads = getVastAd(vastObj);
+  const ads = getAd(vastObj);
 
   if (Array.isArray(ads)) {
     const vast = { ...vastObj.vast, ...{ ad: null } };

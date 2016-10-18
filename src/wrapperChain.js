@@ -1,7 +1,7 @@
 import curry from 'lodash.curry';
 import {
-  isVastWrapper,
-  getVastTagUri,
+  isWrapper,
+  getTagUri,
  } from './selectors';
 
 const defaults = { maxChainDepth: 5 };
@@ -26,8 +26,8 @@ function wrapperChain(fetchAd, config, videoAdTag, adChain = []) {
     .then((vastAdObj) => {
       const newAdChain = [...adChain, vastAdObj];
 
-      if (isVastWrapper(vastAdObj)) {
-        return wrapperChain(fetchAd, config, getVastTagUri(vastAdObj), newAdChain);
+      if (isWrapper(vastAdObj)) {
+        return wrapperChain(fetchAd, config, getTagUri(vastAdObj), newAdChain);
       }
 
       return Promise.resolve(newAdChain);
@@ -35,9 +35,9 @@ function wrapperChain(fetchAd, config, videoAdTag, adChain = []) {
 }
 
 export default curry((fetchAd, config = {}, vastAdObj) => {
-  if (!isVastWrapper(vastAdObj)) {
+  if (!isWrapper(vastAdObj)) {
     return Promise.resolve([vastAdObj]);
   }
 
-  return wrapperChain(fetchAd, { ...defaults, ...config }, getVastTagUri(vastAdObj), [vastAdObj]);
+  return wrapperChain(fetchAd, { ...defaults, ...config }, getTagUri(vastAdObj), [vastAdObj]);
 }, 3);

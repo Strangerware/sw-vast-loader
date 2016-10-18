@@ -1,9 +1,9 @@
 import test from 'ava';
 import {
-  isVastWrapper,
-  getVastTagUri,
-  hasVastAd,
-  getVastAd,
+  isWrapper,
+  getTagUri,
+  hasAd,
+  getAd,
   normaliseWaterfall,
 } from '../src/selectors';
 import { createAsJs } from './fixtures/vastFactory';
@@ -26,45 +26,45 @@ const nonVastWrapperObj = {
   },
 };
 
-test('isVastWrapper must return true if the vastObj is a VAST wrapper', (t) => {
-  t.true(isVastWrapper(vastWrapperObj));
+test('isWrapper must return true if the vastObj is a VAST wrapper', (t) => {
+  t.true(isWrapper(vastWrapperObj));
 });
 
-test('isVastWrapper must return false otherwise', (t) => {
-  t.false(isVastWrapper(nonVastWrapperObj));
-  t.false(isVastWrapper());
-  t.false(isVastWrapper(null));
-  t.false(isVastWrapper('foo'));
-  t.false(isVastWrapper(() => {}));
+test('isWrapper must return false otherwise', (t) => {
+  t.false(isWrapper(nonVastWrapperObj));
+  t.false(isWrapper());
+  t.false(isWrapper(null));
+  t.false(isWrapper('foo'));
+  t.false(isWrapper(() => {}));
 });
 
-test('getVastTagUri must return the vastTagUri from the wrapper vastObj', t =>
-  t.is(getVastTagUri(vastWrapperObj), 'http://expample.com')
+test('getTagUri must return the vastTagUri from the wrapper vastObj', t =>
+  t.is(getTagUri(vastWrapperObj), 'http://expample.com')
 );
 
-test('getVastTagUri must return undefined if vastTagUri can not be found', (t) => {
-  t.is(getVastTagUri(nonVastWrapperObj), undefined);
-  t.is(getVastTagUri(), undefined);
-  t.is(getVastTagUri(null), undefined);
-  t.is(getVastTagUri('nonVastWrapperObj'), undefined);
-  t.is(getVastTagUri(() => {}), undefined);
+test('getTagUri must return undefined if vastTagUri can not be found', (t) => {
+  t.is(getTagUri(nonVastWrapperObj), undefined);
+  t.is(getTagUri(), undefined);
+  t.is(getTagUri(null), undefined);
+  t.is(getTagUri('nonVastWrapperObj'), undefined);
+  t.is(getTagUri(() => {}), undefined);
 });
 
-test('getVastAd must return the vast ad or undefined otherwise', (t) => {
+test('getAd must return the vast ad or undefined otherwise', (t) => {
   const ad = {};
-  t.is(getVastAd({ vast: { ad } }), ad);
-  t.is(getVastAd({ vast: { ad: undefined } }), undefined);
-  t.is(getVastAd({}), undefined);
-  t.is(getVastAd(null), undefined);
-  t.is(getVastAd(), undefined);
+  t.is(getAd({ vast: { ad } }), ad);
+  t.is(getAd({ vast: { ad: undefined } }), undefined);
+  t.is(getAd({}), undefined);
+  t.is(getAd(null), undefined);
+  t.is(getAd(), undefined);
 });
 
-test('hasVastAd must return true if there is at least an ad on the vastObj and false otherwise', (t) => {
-  t.true(hasVastAd({ vast: { ad: {} } }));
-  t.true(hasVastAd({ vast: { ad: [] } }));
-  t.false(hasVastAd({ vast: { ad: undefined } }));
-  t.false(hasVastAd({}));
-  t.false(hasVastAd(null));
+test('hasAd must return true if there is at least an ad on the vastObj and false otherwise', (t) => {
+  t.true(hasAd({ vast: { ad: {} } }));
+  t.true(hasAd({ vast: { ad: [] } }));
+  t.false(hasAd({ vast: { ad: undefined } }));
+  t.false(hasAd({}));
+  t.false(hasAd(null));
 });
 
 test('normalise waterfall must return an array with the normalised waterfall', async(t) => {

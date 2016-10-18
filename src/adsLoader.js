@@ -2,12 +2,12 @@ import fetchAd from './fetchAd';
 import wrapperChain from './wrapperChain';
 import waterfall from './waterfall';
 import {
-  hasVastAd,
+  hasAd,
   normaliseWaterfall,
  } from './selectors';
 
 const validate = (vastObj) => {
-  if (!hasVastAd(vastObj)) {
+  if (!hasAd(vastObj)) {
     const adsLoaderErr = new Error('adsLoader missing ad on VAST response');
     adsLoaderErr.data = vastObj;
     throw adsLoaderErr;
