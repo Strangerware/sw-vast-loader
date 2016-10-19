@@ -4,6 +4,7 @@
   "description": "Isomorphic VAST ADS LOADER",
   "main": "index.js",
   "scripts": {
+    "commit": "git-cz",
     "test": "ava",
     "test:watch": "npm t -- --watch",
     "cover": "nyc --reporter=lcov npm t",
@@ -40,6 +41,8 @@
     "babel-preset-stage-0": "^6.16.0",
     "babel-register": "^6.16.0",
     "codecov": "^1.0.1",
+    "commitizen": "^2.8.6",
+    "cz-conventional-changelog": "^1.2.0",
     "eslint": "^3.7.1",
     "eslint-config-airbnb-base": "^8.0.0",
     "eslint-plugin-ava": "^3.1.0",
@@ -48,6 +51,7 @@
     "eslint-plugin-react": "^6.3.0",
     "husky": "^0.11.8",
     "nyc": "^8.3.1",
+    "semantic-release": "^4.3.5",
     "sinon": "^1.17.6",
     "webpack": "^2.1.0-beta.21",
     "window-or-global": "^1.0.1"
@@ -75,5 +79,10 @@
   "ava": {
     "require": "babel-register",
     "babel": "inherit"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
   }
 }
