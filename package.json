@@ -4,16 +4,18 @@
   "description": "Isomorphic VAST ADS LOADER",
   "main": "index.js",
   "scripts": {
-    "test": "nyc ava",
-    "tdd": "ava --watch",
-    "watch": "./node_modules/.bin/webpack --progress --watch",
+    "test": "ava",
+    "test:watch": "npm t -- --watch",
+    "cover": "nyc --reporter=lcov npm t",
+    "cover:codecov": "cat ./coverage/lcov.info | codecov",
+    "cover:html": "npm run cover && nyc report --reporter=html",
+    "check-coverage": "npm run cover && nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "lint": "eslint src/ test/",
-    "lintfix": "eslint src/ test/ --fix",
+    "lint:fix": "npm run lint -- --fix",
+    "validate": "npm run lint && npm run check-coverage",
     "precommit": "npm run lint",
-    "prepush": "npm test",
-    "report:lcov": "nyc report --reporter=lcov",
-    "report:html": "nyc report --reporter=html",
-    "report:codecov": "cat ./coverage/lcov.info | codecov"
+    "prepush": "npm run validate",
+    "watch": "./node_modules/.bin/webpack --progress --watch"
   },
   "repository": {
     "type": "git",
