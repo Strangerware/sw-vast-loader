@@ -68,7 +68,7 @@ test('hasAd must return true if there is at least an ad on the vastObj and false
   t.false(hasAd(null));
 });
 
-test('normalise waterfall must return an array with the normalised waterfall', async(t) => {
+test('normalise waterfall must return an array with the normalised waterfall', async (t) => {
   const noAdsWaterfall = await createAsJs([]);
   const oneAdWaterfall = await createAsJs([{ type: 'ad' }]);
   const vastWrapper = await createAsJs([{ type: 'wrapper' }]);
