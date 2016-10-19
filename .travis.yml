@@ -3,4 +3,5 @@ install:
 - npm install
 - npm install bithound
 - bithound check git@github.com:sedaAds/ads-loader.git
-
+after_success:
+  - npm run report:coverage
