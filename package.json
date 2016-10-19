@@ -43,6 +43,7 @@
     "babel-register": "^6.16.0",
     "codecov": "^1.0.1",
     "commitizen": "^2.8.6",
+    "cracks": "^3.1.2",
     "cz-conventional-changelog": "^1.2.0",
     "eslint": "^3.7.1",
     "eslint-config-airbnb-base": "^8.0.0",
@@ -84,6 +85,16 @@
   "config": {
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
+    }
+  },
+  "release": {
+    "verifyRelease": {
+      "path": "cracks",
+      "paths": [
+        "test/component",
+        "package.json"
+      ],
+      "silent": true
     }
   }
 }
