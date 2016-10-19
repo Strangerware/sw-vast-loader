@@ -11,6 +11,7 @@
     "lintfix": "eslint src/ test/ --fix",
     "precommit": "npm run lint",
     "prepush": "npm test",
+    "report:lcov": "nyc report --reporter=lcov",
     "report:html": "nyc report --reporter=html",
     "report:codecov": "cat ./coverage/lcov.info | codecov"
   },
