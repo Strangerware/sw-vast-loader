@@ -1,4 +1,4 @@
-# ads-loader
+# Stranger Ads Loader
 
 [![bitHound Overall Score](https://www.bithound.io/github/sedaAds/ads-loader/badges/score.svg)](https://www.bithound.io/github/sedaAds/ads-loader)
 [![bitHound Dev Dependencies](https://www.bithound.io/github/sedaAds/ads-loader/badges/devDependencies.svg)](https://www.bithound.io/github/sedaAds/ads-loader/feature%2Fbithound-integration/dependencies/npm)
@@ -10,4 +10,4 @@
 - to support VAST 2.x, 3.x, 4.x
 
 ## License
-ads-loader is licensed under the MIT License, Version 2.0. [View the license file](LICENSE)
+Stranger Ads Loader is licensed under the MIT License, Version 2.0. [View the license file](LICENSE)
