@@ -119,3 +119,52 @@ test('must resolve with the ad if the passed vastAdObj is a nonWrapper ad', asyn
   t.true(fetchAd.notCalled);
   t.deepEqual(adChain, [vastAd]);
 });
+
+
+test('must allow custom ad chain validation and throw if fails', async (t) => {
+  const fetchAd = sinon.stub();
+  const validate = sinon.stub();
+  const vastAd = await vastWrapperObj('http://example.com/');
+
+  fetchAd
+    .onFirstCall()
+      .returns(Promise.resolve(vastWrapperObj('http://example.com/1')))
+    .onSecondCall()
+      .returns(Promise.resolve(vastWrapperObj('http://example.com/2')))
+    .onThirdCall()
+      .returns(Promise.resolve(nonVastWrapperObj()));
+
+  validate
+    .onFirstCall().throws(new Error('invalid data'));
+
+  t.throws(vastWrapperChain(fetchAd, { validate }, vastAd), 'invalid data');
+});
+
+test('must allow custom ad chain validation and proceed if successfull', async (t) => {
+  const fetchAd = sinon.stub();
+  const validate = sinon.stub();
+  const vastAd = await vastWrapperObj('http://example.com/');
+
+  const expected = await Promise.all([
+    vastWrapperObj('http://example.com/'),
+    vastWrapperObj('http://example.com/1'),
+    vastWrapperObj('http://example.com/2'),
+    nonVastWrapperObj(),
+  ]);
+
+  fetchAd
+    .onFirstCall()
+      .returns(Promise.resolve(vastWrapperObj('http://example.com/1')))
+    .onSecondCall()
+      .returns(Promise.resolve(vastWrapperObj('http://example.com/2')))
+    .onThirdCall()
+      .returns(Promise.resolve(nonVastWrapperObj()));
+
+  validate
+    .onFirstCall().returns(expected);
+
+  const adChain = await vastWrapperChain(fetchAd, { validate }, vastAd);
+
+  t.true(validate.firstCall.calledWith(expected));
+  t.deepEqual(adChain, expected);
+});

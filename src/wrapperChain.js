@@ -4,7 +4,10 @@ import {
   getTagUri,
  } from './selectors';
 
-const DEFAULTS = { maxChainDepth: 5 };
+const DEFAULTS = {
+  maxChainDepth: 5,
+  validate: chain => chain,
+};
 
 function vastWrapperChainError(adChain) {
   const maxChainDepthErr = new Error('VastWrapperChain \'maxChainDepth\' reached');
@@ -34,10 +37,13 @@ function wrapperChain(requestAd, config, videoAdTag, adChain) {
     });
 }
 
-export default curry((requestAd, config = {}, vastAdObj) => {
+
+export default curry((requestAd, conf = {}, vastAdObj) => {
   if (!isWrapper(vastAdObj)) {
     return Promise.resolve([vastAdObj]);
   }
+  const config = Object.assign({}, DEFAULTS, conf);
 
-  return wrapperChain(requestAd, Object.assign({}, DEFAULTS, config), getTagUri(vastAdObj), [vastAdObj]);
+  return wrapperChain(requestAd, config, getTagUri(vastAdObj), [vastAdObj])
+    .then(config.validate);
 }, 3);

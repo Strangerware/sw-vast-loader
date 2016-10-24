@@ -27,7 +27,7 @@ function adsLoader(config = {}, videoAdTag) {
   return requestAd(videoAdTag)
     .then(validate)
     .then(normaliseWaterfall)
-    .then(waterfall(doChain, config));
+    .then(waterfall(doChain));
 }
 
 export default adsLoader;

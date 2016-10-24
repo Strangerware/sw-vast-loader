@@ -1,24 +1,18 @@
 import curry from 'lodash.curry';
 
-const identity = ad => ad;
 
-const doWaterfall = (currentChain, nextChain) =>
-  currentChain
-    .catch(prevErrors =>
-      nextChain()
-        .catch(nextErrors =>
-          Promise.reject([...prevErrors, ...nextErrors])
-        )
-    );
+function runNext(chain, errors) {
+  if (errors.length >= chain.length) {
+    return Promise.reject(errors);
+  }
 
+  return chain[errors.length]()
+    .catch(error => runNext(chain, [...errors, error]));
+}
 
-export default curry((wrapperChain, { validate = identity }, ads = []) => {
-  const createChain = ad => () =>
-    wrapperChain(ad)
-      .then(validate)
-      .catch(e => Promise.reject([e]));
+function waterfall(doChain, ads = []) {
+  const chain = ads.map(ad => () => doChain(ad));
+  return runNext(chain, []);
+}
 
-  return ads
-    .map(createChain)
-    .reduce(doWaterfall, Promise.reject([]));
-}, 3);
+export default curry(waterfall, 2);
