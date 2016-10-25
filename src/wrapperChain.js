@@ -41,7 +41,7 @@ export default curry((requestAd, conf = {}, vastAdObj) => {
   if (!isWrapper(vastAdObj)) {
     return Promise.resolve([vastAdObj]);
   }
-  const config = Object.assign({}, DEFAULTS, conf);
+  const config = { ...DEFAULTS, ...conf };
 
   return wrapperChain(requestAd, config, getTagUri(vastAdObj), [vastAdObj])
     .then(config.validate);
