@@ -9,21 +9,21 @@ const DEFAULTS = {
   validate: chain => chain,
 };
 
-function vastWrapperChainError(adChain) {
+const vastWrapperChainError = function (adChain) {
   const maxChainDepthErr = new Error('VastWrapperChain \'maxChainDepth\' reached');
   maxChainDepthErr.adChain = adChain;
   return maxChainDepthErr;
-}
+};
 
-function validateChainDepth(adChain, maxChainDepth) {
+const validateChainDepth = function (adChain, maxChainDepth) {
   if (adChain.length > maxChainDepth) {
     return Promise.reject(vastWrapperChainError(adChain));
   }
 
   return Promise.resolve();
-}
+};
 
-function wrapperChain(requestAd, config, videoAdTag, adChain) {
+const wrapperChain = function (requestAd, config, videoAdTag, adChain) {
   return validateChainDepth(adChain, config.maxChainDepth)
     .then(() => requestAd(videoAdTag))
     .then((vastAdObj) => {
@@ -35,8 +35,7 @@ function wrapperChain(requestAd, config, videoAdTag, adChain) {
 
       return Promise.resolve(newAdChain);
     });
-}
-
+};
 
 export default curry((requestAd, conf = {}, vastAdObj) => {
   if (!isWrapper(vastAdObj)) {

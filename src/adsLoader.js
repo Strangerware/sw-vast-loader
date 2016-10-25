@@ -6,7 +6,7 @@ import {
   normaliseWaterfall,
  } from './selectors';
 
-function validate(vastObj) {
+const validate = function (vastObj) {
   if (!hasAd(vastObj)) {
     const adsLoaderErr = new Error('adsLoader missing ad on VAST response');
     adsLoaderErr.data = vastObj;
@@ -14,9 +14,9 @@ function validate(vastObj) {
   }
 
   return vastObj;
-}
+};
 
-function adsLoader(config = {}, videoAdTag) {
+const adsLoader = function (config = {}, videoAdTag) {
   if (!videoAdTag) {
     return Promise.reject(new Error('adsLoader missing videoAdTag'));
   }
@@ -28,6 +28,6 @@ function adsLoader(config = {}, videoAdTag) {
     .then(validate)
     .then(normaliseWaterfall)
     .then(waterfall(doChain));
-}
+};
 
 export default adsLoader;

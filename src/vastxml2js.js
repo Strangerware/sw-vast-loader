@@ -1,6 +1,6 @@
 import { parseString } from 'xml2js';
 
-function promisify(func) {
+const promisify = function (func) {
   return new Promise((resolve, reject) => {
     func((error, result) => {
       if (error) {
@@ -10,7 +10,7 @@ function promisify(func) {
       return resolve(result);
     });
   });
-}
+};
 
 const DEFAULTS = {
   explicitArray: false,
