@@ -1,6 +1,6 @@
 {
   "name": "ads-loader",
-  "version": "0.1.0",
+  "version": "0.0.0-semantically-released",
   "description": "Isomorphic VAST ADS LOADER",
   "main": "src/adsLoader.js",
   "scripts": {
@@ -13,8 +13,13 @@
     "precommit": "npm run lint",
     "prepush": "npm run test:cover && npm run check-coverage",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "watch": "./node_modules/.bin/webpack --progress --watch"
+    "prebuild": "rimraf dist",
+    "build": "webpack"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Strangerware/sw-vast-loader.git"
