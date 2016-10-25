@@ -2,36 +2,33 @@
   "name": "ads-loader",
   "version": "0.1.0",
   "description": "Isomorphic VAST ADS LOADER",
-  "main": "index.js",
+  "main": "src/adsLoader.js",
   "scripts": {
     "commit": "git-cz",
     "test": "ava",
-    "test:watch": "npm t -- --watch",
-    "cover": "nyc --reporter=lcov npm t",
-    "cover:codecov": "cat ./coverage/lcov.info | codecov",
-    "cover:html": "npm run cover && nyc report --reporter=html",
-    "check-coverage": "npm run cover && nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
+    "test:cover": "nyc --reporter=lcov npm test",
+    "test:coverhtml": "nyc --reporter=html npm test",
+    "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "lint": "eslint src/ test/",
-    "lint:fix": "npm run lint -- --fix",
-    "validate": "npm run lint && npm run check-coverage",
     "precommit": "npm run lint",
-    "prepush": "npm run validate",
+    "prepush": "npm run test:cover && npm run check-coverage",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "watch": "./node_modules/.bin/webpack --progress --watch"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sedaAds/ads-loader.git"
+    "url": "git+https://github.com/Strangerware/sw-vast-loader.git"
   },
   "authors": [
     "Luis Fetzner <fetzpt@gmail.com> (https://github.com/fetz)",
-    "Carlos Serrano <carpasse@gmail.com> (https://github.com/carpasse)"
+    "Carlos Serrano <carpasse@gmail.com> (https://github.com/carpasse)",
+    "Marco Massarotto <massa84@gmail.com> (https://github.com/brokenmass)"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sedaAds/ads-loader/issues"
+    "url": "https://github.com/Strangerware/sw-vast-loader/issues"
   },
-  "homepage": "https://github.com/sedaAds/ads-loader#readme",
+  "homepage": "https://github.com/Strangerware/sw-vast-loader#readme",
   "devDependencies": {
     "ava": "^0.16.0",
     "babel-cli": "^6.16.0",
@@ -43,7 +40,6 @@
     "babel-register": "^6.16.0",
     "codecov": "^1.0.1",
     "commitizen": "^2.8.6",
-    "cracks": "^3.1.2",
     "cz-conventional-changelog": "^1.2.0",
     "eslint": "^3.8.1",
     "eslint-config-airbnb-base": "^9.0.0",
