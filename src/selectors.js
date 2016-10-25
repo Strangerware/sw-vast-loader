@@ -13,7 +13,7 @@ export const normaliseWaterfall = (vastObj = {}) => {
 
   if (Array.isArray(ads)) {
     const vast = { ...vastObj.vast, ...{ ad: null } };
-    const sharedVastJson = JSON.stringify({ ...vastObj, ...{ vast } });
+    const sharedVastJson = JSON.stringify({ ...vastObj, vast });
 
     return ads.map((ad) => {
       const newVastObj = JSON.parse(sharedVastJson);
