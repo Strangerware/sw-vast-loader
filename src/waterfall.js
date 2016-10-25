@@ -1,6 +1,5 @@
 import curry from 'lodash.curry';
 
-
 const runNext = function (chain, errors) {
   if (errors.length >= chain.length) {
     return Promise.reject(errors);
