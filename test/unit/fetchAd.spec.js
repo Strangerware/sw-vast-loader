@@ -1,5 +1,6 @@
 import test from 'ava';
 import sinon from 'sinon';
+import VastError from 'sw-vast-errors';
 import root from 'window-or-global';
 import fetchAd from '../../src/fetchAd';
 
@@ -49,3 +50,25 @@ test.serial('must resolve the promise with the body as an object', t =>
   fetchAd({}, 'http://example.com/')
     .then(result => t.true(typeof result === 'object'))
 );
+
+test.serial('on xml parsing error must reject with Vast Error 200', (t) => {
+  root.fetch.returns(
+    Promise.resolve(fakeResponse({ text: 'notXML' }))
+  );
+  t.throws(fetchAd({}, 'http://example.com/'), (error) => {
+    t.true(error instanceof VastError);
+    t.is(error.errorCode, 100);
+    return true;
+  });
+});
+
+test.serial('on fetch error must reject with Vast Error 301', (t) => {
+  root.fetch.returns(
+    Promise.reject(new Error('some fetch error'))
+  );
+  t.throws(fetchAd({}, 'http://example.com/'), (error) => {
+    t.true(error instanceof VastError);
+    t.is(error.errorCode, 301);
+    return true;
+  });
+});
