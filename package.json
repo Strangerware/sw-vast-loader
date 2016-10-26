@@ -64,8 +64,8 @@
     "isomorphic-fetch": "^2.2.1",
     "lodash.curry": "^4.1.1",
     "lodash.get": "^4.4.2",
-    "xml2js": "^0.4.17",
-    "sw-vast-errors": "^1.1.0"
+    "sw-vast-errors": "^1.1.0",
+    "xml2js": "^0.4.17"
   },
   "babel": {
     "presets": [
@@ -82,7 +82,7 @@
     }
   },
   "ava": {
-    "require": "babel-register",
+    "require": "./test/_babelHook.js",
     "babel": "inherit"
   },
   "config": {
