@@ -8,3 +8,4 @@ coverage
 !.nvmrc
 !.travis.yml
 !.bithoundrc
+yarn.lock
