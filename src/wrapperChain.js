@@ -4,40 +4,45 @@ import {
   getTagUri,
  } from './selectors';
 
-const defaults = { maxChainDepth: 5 };
+const DEFAULTS = {
+  maxChainDepth: 5,
+  validate: chain => chain,
+};
 
-function vastWrapperChainError(adChain) {
+const vastWrapperChainError = function (adChain) {
   const maxChainDepthErr = new Error('VastWrapperChain \'maxChainDepth\' reached');
   maxChainDepthErr.adChain = adChain;
   return maxChainDepthErr;
-}
+};
 
-function validateChainDepth(adChain, maxChainDepth) {
+const validateChainDepth = function (adChain, maxChainDepth) {
   if (adChain.length > maxChainDepth) {
     return Promise.reject(vastWrapperChainError(adChain));
   }
 
   return Promise.resolve();
-}
+};
 
-function wrapperChain(fetchAd, config, videoAdTag, adChain) {
+const wrapperChain = function (requestAd, config, videoAdTag, adChain) {
   return validateChainDepth(adChain, config.maxChainDepth)
-    .then(() => fetchAd(videoAdTag))
+    .then(() => requestAd(videoAdTag))
     .then((vastAdObj) => {
       const newAdChain = [...adChain, vastAdObj];
 
       if (isWrapper(vastAdObj)) {
-        return wrapperChain(fetchAd, config, getTagUri(vastAdObj), newAdChain);
+        return wrapperChain(requestAd, config, getTagUri(vastAdObj), newAdChain);
       }
 
       return Promise.resolve(newAdChain);
     });
-}
+};
 
-export default curry((fetchAd, config = {}, vastAdObj) => {
+export default curry((requestAd, conf = {}, vastAdObj) => {
   if (!isWrapper(vastAdObj)) {
     return Promise.resolve([vastAdObj]);
   }
+  const config = { ...DEFAULTS, ...conf };
 
-  return wrapperChain(fetchAd, { ...defaults, ...config }, getTagUri(vastAdObj), [vastAdObj]);
+  return wrapperChain(requestAd, config, getTagUri(vastAdObj), [vastAdObj])
+    .then(config.validate);
 }, 3);

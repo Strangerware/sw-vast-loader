@@ -1,7 +1,7 @@
 import { parseString } from 'xml2js';
 
-const promisify = func => new Promise(
-  (resolve, reject) => {
+const promisify = function (func) {
+  return new Promise((resolve, reject) => {
     func((error, result) => {
       if (error) {
         return reject(error);
@@ -9,10 +9,10 @@ const promisify = func => new Promise(
 
       return resolve(result);
     });
-  }
-);
+  });
+};
 
-const defaults = {
+const DEFAULTS = {
   explicitArray: false,
   normalizeTags: true,
   normalize: true,
@@ -20,4 +20,4 @@ const defaults = {
 };
 
 export default xml =>
-  promisify(cb => parseString(xml, defaults, cb));
+  promisify(cb => parseString(xml, DEFAULTS, cb));
