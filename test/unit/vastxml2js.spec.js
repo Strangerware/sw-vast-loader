@@ -1,4 +1,5 @@
 import test from 'ava';
+import VastError from 'sw-vast-errors';
 import vastxml2js from '../../src/vastxml2js';
 import { vast, parsedVast } from '../fixtures/vastFullSample';
 
@@ -44,4 +45,13 @@ test('must be able to deserialise tricky URIs', async (t) => {
   `;
   const result = await vastxml2js(trickyXML);
   t.is(result.vast.ad.impression._, 'http://ad.server.com/impression/dot.gif?s=x]]>x');
+});
+
+test('on xml parsing error must reject with Vast Error 100', (t) => {
+  const wrongXML = 'I AM NOT XML, I AM A JSON IN DISGUISE';
+  t.throws(vastxml2js(wrongXML), (error) => {
+    t.true(error instanceof VastError);
+    t.is(error.errorCode, 100);
+    return true;
+  });
 });
