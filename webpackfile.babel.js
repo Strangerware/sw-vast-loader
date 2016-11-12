@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import webpack from 'webpack';
+import path from 'path';
 
 const config = {
   entry: {
@@ -13,9 +14,9 @@ const config = {
   module: {
     loaders: [
       {
-        loader: 'babel',
-        exclude: /node_modules/,
+        loader: 'babel-loader',
         query: {
+          cacheDirectory: true,
           presets: ['es2015', 'stage-2'],
         },
       },
