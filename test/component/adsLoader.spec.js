@@ -112,10 +112,9 @@ test.serial('must fail if the waterfall fails', async (t) => {
     validate: () => Promise.reject(new Error('Failed Validation')),
   }, 'http://example.com/')
   .catch((errors) => {
-    console.log();
     t.deepEqual(errors.map(e => e.message), [
       'VastWrapperChain \'maxChainDepth\' reached',
-      'Non-whitespace before first tag.\nLine: 0\nColumn: 1\nChar: N',
+      'XML parsing error.',
       'Failed Validation',
     ]);
   });
