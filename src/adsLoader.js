@@ -3,7 +3,7 @@ import wrapperChain from './wrapperChain';
 import waterfall from './waterfall';
 import {
   hasAd,
-  normaliseWaterfall,
+  normaliseVastResponse,
  } from './selectors';
 
 const validate = function (vastObj) {
@@ -26,7 +26,7 @@ const adsLoader = function (config = {}, videoAdTag) {
 
   return requestAd(videoAdTag)
     .then(validate)
-    .then(normaliseWaterfall)
+    .then(normaliseVastResponse)
     .then(waterfall(doChain));
 };
 

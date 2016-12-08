@@ -3,7 +3,7 @@ import root from 'window-or-global';
 import sinon from 'sinon';
 import adsLoader from '../../src/adsLoader';
 import vastxml2js from '../../src/vastxml2js';
-import { normaliseWaterfall } from '../../src/selectors';
+import { normaliseVastResponse } from '../../src/selectors';
 import { createAsXml } from '../fixtures/vastFactory';
 
 test.beforeEach(() => sinon.stub(root, 'fetch'));
@@ -78,7 +78,7 @@ test.serial('must do all the waterfalls to get a valid ad', async (t) => {
 
   const adChain = await adsLoader({}, 'http://example.com/');
   const jsVastWaterfall = await vastxml2js(vastWaterfall);
-  const normalisedWaterfall = normaliseWaterfall(jsVastWaterfall);
+  const normalisedWaterfall = normaliseVastResponse(jsVastWaterfall);
   const expectedNonWrapperAd = await vastxml2js(nonWrapperAd);
   t.is(root.fetch.callCount, 3);
   t.deepEqual(adChain, [normalisedWaterfall[1], expectedNonWrapperAd]);
