@@ -8,7 +8,7 @@ export const getAd = (vastObj = {}) => get(vastObj, 'vast.ad');
 
 export const hasAd = (vastObj = {}) => !!getAd(vastObj);
 
-export const normaliseWaterfall = (vastObj = {}) => {
+export const normaliseVastResponse = (vastObj = {}) => {
   const ads = getAd(vastObj);
 
   if (Array.isArray(ads)) {
@@ -24,3 +24,5 @@ export const normaliseWaterfall = (vastObj = {}) => {
 
   return [vastObj];
 };
+
+export const isPodAd = (vastObj = {}) => Boolean(get(vastObj, 'vast.ad.$.sequence'));

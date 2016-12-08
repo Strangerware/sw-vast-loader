@@ -4,7 +4,8 @@ import {
   getTagUri,
   hasAd,
   getAd,
-  normaliseWaterfall,
+  normaliseVastResponse,
+  isPodAd,
 } from '../../src/selectors';
 import { createAsJs } from '../fixtures/vastFactory';
 
@@ -85,8 +86,17 @@ test('normalise waterfall must return an array with the normalised waterfall', a
       return vastObj;
     });
 
-  t.deepEqual(normaliseWaterfall(), [{}]);
-  t.deepEqual(normaliseWaterfall(noAdsWaterfall), [noAdsWaterfall]);
-  t.deepEqual(normaliseWaterfall(oneAdWaterfall), [oneAdWaterfall]);
-  t.deepEqual(normaliseWaterfall(adsWaterfall), expected);
+  t.deepEqual(normaliseVastResponse(), [{}]);
+  t.deepEqual(normaliseVastResponse(noAdsWaterfall), [noAdsWaterfall]);
+  t.deepEqual(normaliseVastResponse(oneAdWaterfall), [oneAdWaterfall]);
+  t.deepEqual(normaliseVastResponse(adsWaterfall), expected);
+});
+
+test('isPodAd must return true if the ad has a sequence attr', async (t) => {
+  const podAd = await createAsJs([{ type: 'ad', sequence: 1 }]);
+  const nonPodAd = await createAsJs([{ type: 'ad' }]);
+
+  t.true(isPodAd(podAd));
+  t.false(isPodAd(nonPodAd));
+  t.false(isPodAd());
 });
