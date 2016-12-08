@@ -1,16 +1,16 @@
 import vastxml2js from '../../src/vastxml2js';
 
 const types = {
-  wrapper: ({ id, uri = 'http://example.com/' }) => `
-    <Ad id="${id}">
+  wrapper: ({ id, uri = 'http://example.com/', sequence }) => `
+    <Ad id="${id}" sequence="${sequence}">
       <Wrapper fallbackOnNoAd="true">
         <AdSystem>GDFP</AdSystem>
         <VASTAdTagURI><![CDATA[${uri}]]></VASTAdTagURI>
       </Wrapper>
     </Ad>
   `,
-  ad: ({ id, title = 'Test Ad Video' }) => `
-    <Ad id="${id}">
+  ad: ({ id, title = 'Test Ad Video', sequence = '' }) => `
+    <Ad id="${id}" sequence="${sequence}">
       <InLine>
         <AdSystem>GDFP</AdSystem>
         <AdTitle>${title}</AdTitle>
@@ -22,7 +22,7 @@ const types = {
 export const createAsXml = (vastAdTagURIs = []) => {
   const waterfall = vastAdTagURIs
     .map(
-      ({ uri, type, title }, id) => types[type]({ uri, id, title })
+      ({ uri, type, title, sequence }, id) => types[type]({ uri, id, title, sequence })
     ).join('');
 
   return `
