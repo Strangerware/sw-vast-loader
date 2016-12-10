@@ -1,4 +1,5 @@
 import curry from 'lodash.curry';
+import VastError from 'sw-vast-errors';
 import {
   isWrapper,
   getTagUri,
@@ -9,38 +10,37 @@ const DEFAULTS = {
   validate: chain => chain,
 };
 
-const vastWrapperChainError = function (adChain) {
-  const maxChainDepthErr = new Error('VastWrapperChain \'maxChainDepth\' reached');
-  maxChainDepthErr.adChain = adChain;
-  return maxChainDepthErr;
-};
-
-const validateChainDepth = function (adChain, maxChainDepth) {
+const validateChainDepth = function (adChain, { maxChainDepth }) {
   if (adChain.length > maxChainDepth) {
-    return Promise.reject(vastWrapperChainError(adChain));
+    return Promise.reject(new VastError({ errorCode: 302 }));
   }
 
   return Promise.resolve();
 };
 
+const isComplete = adChain => !isWrapper(adChain[adChain.length - 1]);
+
 const wrapperChain = function (requestAd, config, videoAdTag, adChain) {
-  return validateChainDepth(adChain, config.maxChainDepth)
+  if (isComplete(adChain)) {
+    return [adChain];
+  }
+
+  return validateChainDepth(adChain, config)
     .then(() => requestAd(videoAdTag))
-    .then((vastAdObj) => {
-      const newAdChain = [...adChain, vastAdObj];
+    .catch((error) => {
+      const vastError = error instanceof VastError
+        ? error
+        : new VastError({ errorCode: 900, error });
 
-      if (isWrapper(vastAdObj)) {
-        return wrapperChain(requestAd, config, getTagUri(vastAdObj), newAdChain);
-      }
-
-      return Promise.resolve(newAdChain);
-    });
+      return Promise.reject([
+        [...adChain, vastError],
+      ]);
+    })
+    .then(vastAdObj =>
+      wrapperChain(requestAd, config, getTagUri(vastAdObj), [...adChain, vastAdObj]));
 };
 
 export default curry((requestAd, conf = {}, vastAdObj) => {
-  if (!isWrapper(vastAdObj)) {
-    return Promise.resolve([vastAdObj]);
-  }
   const config = { ...DEFAULTS, ...conf };
 
   return wrapperChain(requestAd, config, getTagUri(vastAdObj), [vastAdObj])

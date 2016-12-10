@@ -16,6 +16,14 @@ const validate = function (vastObj) {
   return vastObj;
 };
 
+const getType = (ads) => {
+  if (!ads || ads.length === 0) {
+    return 'error';
+  }
+
+  return 'stand-alone';
+};
+
 const adsLoader = function (config = {}, videoAdTag) {
   if (!videoAdTag) {
     return Promise.reject(new Error('adsLoader missing videoAdTag'));
@@ -27,7 +35,14 @@ const adsLoader = function (config = {}, videoAdTag) {
   return requestAd(videoAdTag)
     .then(validate)
     .then(normaliseVastResponse)
-    .then(waterfall(doChain));
+    .then(waterfall(doChain))
+    .then(({ ads, failedAds }) => {
+      return {
+        ads,
+        failedAds,
+        type: getType(ads),
+      };
+    });
 };
 
 export default adsLoader;

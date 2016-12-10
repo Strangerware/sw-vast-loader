@@ -21,6 +21,8 @@
     "func-style": ["error", "expression"],
     "func-names": ["error", "never"],
     "import/no-extraneous-dependencies": [ "error", { "devDependencies": ["**/*.spec.js"] }],
-    "import/extensions": ["error", "never"]
+    "import/extensions": ["error", "never"],
+    "arrow-body-style": "off",
+    "arrow-parens": "off"
   }
 }
